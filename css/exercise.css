@@ -1,0 +1,176 @@
+/* Styles */
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    color: #484848;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 100%;
+    position: relative;
+}
+
+a {
+  color: #C85300;
+  font-weight: bold;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
+.container {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.container__base-padding {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.header {
+    background-color: #29455e;
+    color: #fff;
+}
+
+.page-heading {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.accordion-container {
+    font-size: .9em;
+}
+
+.accordion {
+    cursor: pointer;
+    background-color: #f3f3f3;
+    border-radius: 2px;
+    font-size: 1em;
+    padding: .5em 6em .5em 4em;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    position: relative;
+}
+
+.accordion-container:nth-child(odd) .accordion {
+    background-color: #ececec;
+}
+
+.accordion-container .accordion:focus,
+.accordion-container .accordion:hover,
+.accordion-container .accordion:active {
+    background-color: rgba(208, 107, 36, 0.12);
+    outline: none;
+}
+
+.accordion span {
+    position: absolute;
+    font-weight: normal;
+    right: 3em;
+}
+
+.accordion::before {
+    content: '';
+    position: absolute;
+    left: 1em;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid #C85300;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+.accordion.open::before {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 0;
+  border-top: 10px solid #C85300;
+}
+
+.button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  background-color: #C85300;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: .9em;
+  line-height: 1;
+  padding: .75em 1em;
+  text-decoration: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button:hover, .button:focus {
+    background-color: #d06b24;
+    color: #fff;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    background-color: #e6b28c;
+}
+
+.column-two {
+    column-count: 2;
+    list-style-type: none;
+}
+
+.message:not(:empty) {
+    text-align: center;
+    background-color: rgba(208, 107, 36, 0.12);
+    padding: 1em;
+    border-radius: 4px;
+}
+
+/* Utility classes */
+
+.move-right {
+    float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.alert {
+    color: #d80f0f;
+}
+
+.safe {
+    color: #127912
+}
