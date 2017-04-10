@@ -18,6 +18,7 @@ var renderRecords = function() {
     for(var i = 0; len = dataArray.length, i < len; i++)  {
       // must iterate through arrays contained in returned array
       dataArray[i].forEach(function(currentValue, i, array) {
+        var containerItem = document.createElement('div');
         var name = array[i].name;
         var rawDistance = +(+array[i].close_approach_data[0].miss_distance.miles).toFixed();
         var rawSpeed = +(+array[i].close_approach_data[0].relative_velocity.miles_per_hour).toFixed();
@@ -40,11 +41,10 @@ var renderRecords = function() {
         var ULAccessiblity = 'id="ui-id-' + idCount + '" aria-labelledby="ui-id-' + (idCount - 1) + '" role="tabpanel" aria-hidden="true"'
         var unorderedList = '<ul hidden class="column-two"' + ULAccessiblity + '>' + approachDate + distance + speed + size + link + '</ul>';
         idCount++;
-        container.innerHTML += divElem;
-        container.innerHTML += unorderedList;
-        // append formatted html to document fragment
-        docFrag.appendChild(container);
+        containerItem.innerHTML += divElem + unorderedList ;
+        container.appendChild(containerItem);
       });
+      docFrag.appendChild(container);
       //append final, complete HTML to the DOM
       outputLoc.appendChild(docFrag);
     }
@@ -86,14 +86,14 @@ var renderRecords = function() {
           message.textContent = 'There are no asteroids that might kill us all this week.';
         } else {
           for (var i = 0; len = safe.length, i < len; i++) {
-            safe[i].parentNode.setAttribute('hidden', '');
+            safe[i].parentNode.parentNode.setAttribute('hidden', '');
           }
           button.textContent = 'Show all';
           message.textContent = '';
         }
       } else {
         for (var i = 0; len = safe.length, i < len; i++) {
-          safe[i].parentNode.removeAttribute('hidden', '');
+          safe[i].parentNode.parentNode.removeAttribute('hidden');
         }
         button.innerText = 'Show only potentially hazardous';
       }
