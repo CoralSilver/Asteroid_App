@@ -12,10 +12,12 @@ var renderRecords = function() {
     container.setAttribute('role', 'tablist');
     // count for unique aria ids to accordion items
     var idCount = 1;
-    for (var key in result) {
-      // must iterate through arrays contained in returned dataObject
-      var arrayValue = result[key];
-      arrayValue.forEach(function(currentValue, i, array) {
+    // Convert dataObject to an array in order to reverse with today's date first instead of last (imperfect)
+    var dataArray = Object.keys(result).map(function(k) { return result[k]; });
+    dataArray.reverse();
+    for(var i = 0; len = dataArray.length, i < len; i++)  {
+      // must iterate through arrays contained in returned array
+      dataArray[i].forEach(function(currentValue, i, array) {
         var name = array[i].name;
         var rawDistance = +(+array[i].close_approach_data[0].miss_distance.miles).toFixed();
         var rawSpeed = +(+array[i].close_approach_data[0].relative_velocity.miles_per_hour).toFixed();
@@ -48,41 +50,30 @@ var renderRecords = function() {
     }
   }
 
-  toggle = function(e) {
-    // remove hidden attribute on sibling ul and set aria props to true
+  var toggleState = function(e, elem, one, two) {
     if (e.target && e.target.matches(".accordion")) {
-      var allRecordNames = document.getElementsByClassName('accordion');
-      var moreInfo = e.target.nextElementSibling;
-      moreInfo.removeAttribute('hidden');
-      moreInfo.setAttribute('aria-hidden', false);
-      moreInfo.previousElementSibling.className = 'accordion open';
-      moreInfo.previousElementSibling.setAttribute('aria-expanded', true);
-      moreInfo.previousElementSibling.setAttribute('aria-selected', true);
-      // iteratate through all other uls to check for any open and add hidden/aria false attributes
-      for (var i = 0; i < allRecordNames.length; i++) {
-        if (allRecordNames[i] !== e.target && allRecordNames[i].classList.contains('open')) {
-          var toHideElem = allRecordNames[i].nextElementSibling;
-          toHideElem.setAttribute('hidden', '');
-          toHideElem.setAttribute('aria-hidden', true);
-          toHideElem.previousElementSibling.className = 'accordion'
-          toHideElem.previousElementSibling.setAttribute('aria-expanded', false);
-          toHideElem.previousElementSibling.setAttribute('aria-selected', false);
-          // return because only one ul can be shown at a time
-          return false;
-        }
+      var visibility = elem.getAttribute('aria-expanded');
+      var isVisible = (visibility == 'true');
+      isVisible = !isVisible;
+      elem.setAttribute('aria-expanded', isVisible);
+      elem.setAttribute('aria-selected', isVisible);
+      elem.nextElementSibling.setAttribute('aria-hidden', !isVisible);
+      if (isVisible) {
+        elem.nextElementSibling.removeAttribute('hidden');
+      } else {
+        elem.nextElementSibling.setAttribute('hidden','');
       }
     }
-  }
+  };
 
   toggleRecordVisibility = function(elem) {
     // add keyboard support
     elem.addEventListener('keypress', function(e) {
       if (e.which === 32 || e.which === 13) {
-        toggle(e);
+        toggleState(e, e.target, 'closed', 'open');
       }
     });
     elem.addEventListener('click', function(e) {
-      toggle(e);
     });
   }
 
