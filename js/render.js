@@ -12,10 +12,12 @@ var renderRecords = function() {
     container.setAttribute('role', 'tablist');
     // count for unique aria ids to accordion items
     var idCount = 1;
-    for (var key in result) {
-      // must iterate through arrays contained in returned dataObject
-      var arrayValue = result[key];
-      arrayValue.forEach(function(currentValue, i, array) {
+    // Convert dataObject to an array in order to reverse with today's date first instead of last (imperfect)
+    var dataArray = Object.keys(result).map(function(k) { return result[k]; });
+    dataArray.reverse();
+    for(var i = 0; len = dataArray.length, i < len; i++)  {
+      // must iterate through arrays contained in returned array
+      dataArray[i].forEach(function(currentValue, i, array) {
         var name = array[i].name;
         var rawDistance = +(+array[i].close_approach_data[0].miss_distance.miles).toFixed();
         var rawSpeed = +(+array[i].close_approach_data[0].relative_velocity.miles_per_hour).toFixed();
