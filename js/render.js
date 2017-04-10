@@ -74,6 +74,7 @@ var renderRecords = function() {
       }
     });
     elem.addEventListener('click', function(e) {
+      toggleState(e, e.target, 'closed', 'open');
     });
   }
 
